@@ -2,15 +2,27 @@ import React from "react";
 import Butao from "../Butao";
 import style from './Form.module.scss';
 class Formulario extends React.Component{
+    state = {
+        tarefa:"",
+        tempo:"00:00"
+    }
+
+    adicionarTarefa(evento: React.FormEvent){ 
+        evento.preventDefault()
+        console.log('state',this.state)
+    }
+
     render(){
         return(
-            <form className={style.novaTarefa}>
+            <form className={style.novaTarefa} onSubmit={this.adicionarTarefa.bind(this)}>
                <div className={style.inputContainer}>
                    <label htmlFor="tarefa">Adicione um Estudios</label>
                    <input 
                         type="text"
                         name="tarefa"
                         id="tarefa"
+                        value={this.state.tarefa}
+                        onChange={evento => this.setState({...this.state, tarefa: evento.target.value})}
                         placeholder="Adicione um estudio"
                         required
                     />
@@ -22,12 +34,14 @@ class Formulario extends React.Component{
                         name="tempo"
                         id="tempo"
                         step="1"
+                        value={this.state.tempo}
+                        onChange={evento => this.setState({...this.state, tempo: evento.target.value})}
                         min="00:00:00"
                         max="02:00:00"
                         required
                     />
                </div>
-               <Butao>
+               <Butao type="submit">
                    Adiconar
                </Butao>
             </form>
