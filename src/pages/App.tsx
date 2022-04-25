@@ -1,24 +1,41 @@
 import React, { useState } from 'react';
-import Butao from '../components/Butao';
+import Botao from '../components/Butao';
 import { Cronometro } from '../components/Cronometro';
 import Formulario from '../components/Formulario';
 import Lista from '../components/Lista/Lista';
-import style from './App.module.scss';
+import { ITarefa } from '../types/tarefa';
+import style from './App.module.scss'
 
 function App() {
-  const [tarefa , setTarefa] = useState ([
-    {tarefa: "JavaScripy",tempo: "01:30:00"},
-    {tarefa: "Html Css",tempo: "02:00:00"},
-    {tarefa: "Php", tempo: "01:30:00"}
-]
-)
+
+  const [tarefas, setTarefas] = useState<ITarefa[]>([])
+  const [selecionado, setSelecionado] = useState<ITarefa>();
+
+  function selecionaTarefa(tarefaSelecionada: ITarefa) {
+    setSelecionado(tarefaSelecionada);
+    setTarefas(tarefasAnteriores =>
+      tarefasAnteriores.map(tarefa => (
+        {
+        ...tarefa,
+        selecionado: tarefa.id === tarefaSelecionada.id ? true : false
+
+      })))
+  }
 
   return (
-    <div className={style.AppStyle} >     
-        <Formulario setTarefa={setTarefa}/>
-        <Lista tarefa={tarefa}/>
-        <Cronometro/>
+
+    <div className={style.AppStyle}>
+
+      <Formulario setTarefas={setTarefas} />
+
+      <Lista tarefas={tarefas} selecionaTarefa={selecionaTarefa} />
+
+      <Cronometro/>
+
     </div>
+
   );
+
 }
+
 export default App;
