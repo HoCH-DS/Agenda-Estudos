@@ -3,12 +3,13 @@ import style from './Button.module.scss';
 
 class Butao extends React.Component<{
     type?:"button" | "submit" | "reset" | undefined
+    onClick?:() => void
 }>
 {
     render(){
-        const {type = "button"} = this.props
+        const {type = "button",onClick} = this.props
         return(
-            <button  className={style.botao}>
+            <button onClick={onClick} type={type} className={style.botao}>
                 {this.props.children}
             </button>
         )
